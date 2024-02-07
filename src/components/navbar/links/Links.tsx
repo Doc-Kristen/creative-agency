@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import React from 'react'
+import styles from './links.module.scss'
+import NavLink from './navLink/NavLink'
 
 const Links = () => {
 	const links = [
@@ -21,14 +22,24 @@ const Links = () => {
 		},
 	]
 
+	// Временные данные, пока не реализована авторизация
+	const session = true
+	const isAdmin = true
+
 	return (
-		<div>
+		<nav className={styles.links}>
 			{links.map(link => (
-				<Link href={link.path} key={link.title}>
-					{link.title}
-				</Link>
+				<NavLink key={link.title} title={link.title} path={link.path} />
 			))}
-		</div>
+			{session ? (
+				<>
+					{isAdmin && <NavLink title={'Admin'} path={'/admin'} />}
+					<button className={styles.logout}>Logout</button>
+				</>
+			) : (
+				<NavLink title={'Login'} path={'/login'} />
+			)}
+		</nav>
 	)
 }
 

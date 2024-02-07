@@ -1,0 +1,35 @@
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+
+    @include vp-1023 {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 30px;
+    }
+}
+
+.logout {
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    opacity: 1;
+    transition: color $trans-default opacity $trans-default;
+
+    @include vp-1023 {
+        color: $color-jacksons-purple;
+    }
+
+    @include hover-focus {
+        opacity: 0.8;
+    }
+
+    &:active {
+        background-color: $color-bg;
+        color: $color-text;
+    }
+}
