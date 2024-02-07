@@ -6,6 +6,7 @@ const __dirname = new URL('.', import.meta.url).pathname
 const nextConfig = {
 	sassOptions: {
 		includePaths: [path.join(__dirname, 'styles')],
+		additionalData: `@import "src/styles/variables.scss"; @import "src/styles/mixins.scss";`,
 	},
 }
 
