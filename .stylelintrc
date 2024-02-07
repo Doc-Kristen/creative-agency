@@ -1,0 +1,9 @@
+{
+	"extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
+	"ignoreFiles": ["node_modules/**/*.scss", "**/styles/**/*.scss"],
+	"rules": {
+		"selector-pseudo-class-no-unknown": null,
+		"property-no-unknown": [true, { "ignoreProperties": ["composes"] }],
+		"declaration-no-important": true
+	}
+}
