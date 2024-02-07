@@ -1,24 +1,27 @@
-'use client'
+"use client";
 
-import React from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import styles from './navLink.module.scss'
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./navLink.module.scss";
 
 interface NavLinkProps {
-	title: string
-	path: string
+  title: string;
+  path: string;
 }
 
 const NavLink: React.FC<NavLinkProps> = ({ title, path }) => {
-	const pathName = usePathname()
-	const isActiveLink = path === pathName
+  const pathName = usePathname();
+  const isActiveLink = path === pathName;
 
-	return (
-		<Link className={`${styles.container} ${isActiveLink && styles.active}`} href={path}>
-			{title}
-		</Link>
-	)
-}
+  return (
+    <Link
+      className={`${styles.container} ${isActiveLink ? styles.active : ""}`}
+      href={path}
+    >
+      {title}
+    </Link>
+  );
+};
 
-export default NavLink
+export default NavLink;

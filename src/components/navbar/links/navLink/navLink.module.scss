@@ -12,3 +12,13 @@
         }
     }
 }
+
+.active {
+    background-color: $color-text;
+    color: $color-bg;
+    pointer-events: none;
+
+    @include vp-1023 {
+        color: $color-jacksons-purple;
+    }
+}
