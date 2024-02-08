@@ -4,6 +4,7 @@
 	"rules": {
 		"selector-pseudo-class-no-unknown": null,
 		"property-no-unknown": [true, { "ignoreProperties": ["composes"] }],
-		"declaration-no-important": true
+		"declaration-no-important": true,
+    "selector-class-pattern": null
 	}
 }
