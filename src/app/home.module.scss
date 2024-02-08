@@ -56,17 +56,17 @@
           color: $color-text;
         }
 
-        &:disabled {
-          opacity: 0.5;
-          pointer-events: none;
-        }
-
         @include hover-focus {
           opacity: 0.8;
         }
 
         &:active {
           opacity: 0.8;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          pointer-events: none;
         }
       }
     }

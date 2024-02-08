@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+
+  @include vp-767 {
+    flex-direction: column;
+  }
+
+  .imgContainer {
+    position: relative;
+    flex: 1;
+    height: 500px;
+
+    .img {
+      object-fit: contain;
+    }
+  }
+
+  .formContainer {
+    flex: 1;
+  }
+}
