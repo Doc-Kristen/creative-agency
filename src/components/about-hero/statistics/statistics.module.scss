@@ -1,0 +1,22 @@
+    .boxes {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 145px;
+      }
+
+      .boxTitle {
+        color: $color-btn;
+      }
+
+      .boxDescription {
+        color: $color-btn;
+      }
+    }
