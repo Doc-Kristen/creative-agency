@@ -1,34 +1,27 @@
 import Image from "next/image";
 import styles from "./single-post-page.module.scss";
+import PostUser from "@/components/post-user/PostUser";
+import { Suspense } from "react";
+import { getPost } from "@/lib/data";
 
-const SinglePostPage: React.FC = () => {
+const SinglePostPage: React.FC = async ({ params }) => {
+  const { slug } = params;
+
+  const post = await getPost(slug);
+
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
         <Image src={"/img/post.jpg"} alt="" fill className={styles.img} />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
-        <div className={styles.detail}>
-          <div className={styles.avatarContainer}>
-            <Image
-              src={"/img/no-avatar.png"}
-              alt=""
-              fill
-              className={styles.avatar}
-            />
-          </div>
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Published</span>
-            <span className={styles.detailValue}>12.02.2024</span>
-          </div>
-        </div>
-        <div className={styles.content}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam a
-          amet pariatur? Id iusto nam voluptatibus quia provident quibusdam
-          repellat distinctio dicta odio doloremque, voluptates molestiae
-          possimus dolorum maiores aspernatur earum non.
-        </div>
+        <h1 className={styles.title}>{post?.title}</h1>
+        {post && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <PostUser userId={post.userId} />
+          </Suspense>
+        )}
+        <div className={styles.content}>{post?.body}</div>
       </div>
     </div>
   );
