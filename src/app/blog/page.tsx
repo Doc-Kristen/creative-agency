@@ -4,13 +4,16 @@ import { getPosts } from "@/lib/data";
 
 const BlogPage: React.FC = async () => {
   const posts = await getPosts();
+
   return (
     <ul className={styles.container}>
-      {posts.map((post) => (
-        <li className={styles.post} key={post.id}>
-          <PostCard {...post} />
-        </li>
-      ))}
+      {posts.map((post) => {
+        return (
+          <li className={styles.post} key={post.id}>
+            <PostCard post={post} />
+          </li>
+        );
+      })}
     </ul>
   );
 };

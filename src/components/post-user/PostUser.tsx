@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getUser } from "@/lib/data";
 import styles from "./post-user.module.scss";
 
-const PostUser = async ({ userId }: { userId: string }) => {
+const PostUser: React.FC<{ userId: string }> = async ({ userId }) => {
   const user = await getUser(userId);
 
   return (
@@ -17,7 +17,7 @@ const PostUser = async ({ userId }: { userId: string }) => {
       </div>
       <div className={styles.texts}>
         <span className={styles.title}>Author</span>
-        <span className={styles.username}>{user?.name}</span>
+        <span className={styles.username}>{user?.username}</span>
       </div>
     </div>
   );

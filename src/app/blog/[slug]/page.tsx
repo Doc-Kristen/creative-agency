@@ -3,16 +3,26 @@ import styles from "./single-post-page.module.scss";
 import PostUser from "@/components/post-user/PostUser";
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
+import { ParsedUrlQuery } from "node:querystring";
 
-const SinglePostPage: React.FC = async ({ params }) => {
+interface Params extends ParsedUrlQuery {
+  slug: string;
+}
+
+interface Props {
+  params: Params;
+}
+
+const SinglePostPage: React.FC<Props> = async ({ params }) => {
   const { slug } = params;
-
   const post = await getPost(slug);
 
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
-        <Image src={"/img/post.jpg"} alt="" fill className={styles.img} />
+        {post?.img && (
+          <Image src={post.img} alt="" fill className={styles.img} />
+        )}
       </div>
       <div className={styles.textContainer}>
         <h1 className={styles.title}>{post?.title}</h1>
@@ -21,7 +31,7 @@ const SinglePostPage: React.FC = async ({ params }) => {
             <PostUser userId={post.userId} />
           </Suspense>
         )}
-        <div className={styles.content}>{post?.body}</div>
+        <div className={styles.content}>{post?.description}</div>
       </div>
     </div>
   );

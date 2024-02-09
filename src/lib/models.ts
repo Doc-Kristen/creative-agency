@@ -4,7 +4,7 @@ import mongoose, { Model } from "mongoose";
 
 const userSchema = new mongoose.Schema<IUser>(
   {
-    userName: {
+    username: {
       type: String,
       required: true,
       unique: true,
@@ -33,8 +33,6 @@ const userSchema = new mongoose.Schema<IUser>(
   { timestamps: true }
 );
 
-export const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
-
 const postSchema = new mongoose.Schema<IPost>(
   {
     title: {
@@ -61,4 +59,8 @@ const postSchema = new mongoose.Schema<IPost>(
   { timestamps: true }
 );
 
-export const Post: Model<IPost> = mongoose.model<IPost>("Post", postSchema);
+export const User: Model<IUser> =
+  mongoose.models?.User || mongoose.model("User", userSchema);
+
+export const Post: Model<IPost> =
+  mongoose.models?.Post || mongoose.model("Post", postSchema);

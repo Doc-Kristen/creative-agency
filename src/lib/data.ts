@@ -1,26 +1,46 @@
-// TEMPORARY DATA
-const users = [
-  { id: 1, name: "John" },
-  { id: 2, name: "Jane" },
-];
-
-const posts = [
-  { id: 1, title: "Post 1", body: "......", userId: 1 },
-  { id: 2, title: "Post 2", body: "......", userId: 1 },
-  { id: 3, title: "Post 3", body: "......", userId: 2 },
-  { id: 4, title: "Post 4", body: "......", userId: 2 },
-];
+import { Post, User } from "./models";
+import { connectToDb } from "./utils";
 
 export const getPosts = async () => {
-  return posts;
+  try {
+    connectToDb();
+    const posts = await Post.find();
+    return posts;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get posts");
+  }
 };
 
-export const getPost = async (postId: string) => {
-  const res = posts.find((post) => post.id === parseInt(postId));
-  console.log(postId);
-  return res;
+export const getPost = async (slug: string) => {
+  try {
+    connectToDb();
+    const post = await Post.findOne({ slug });
+    return post;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get post");
+  }
 };
 
 export const getUser = async (userId: string) => {
-  return users.find((item) => item.id === parseInt(userId));
+  try {
+    connectToDb();
+    const user = await User.findById(userId);
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get user");
+  }
+};
+
+export const getUsers = async () => {
+  try {
+    connectToDb();
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get users");
+  }
 };
