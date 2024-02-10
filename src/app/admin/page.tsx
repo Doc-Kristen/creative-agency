@@ -1,5 +1,10 @@
-const AdminPage: React.FC = () => {
-	return <div>AdminPage</div>
-}
+export const metadata = {
+  title: "Admin",
+  description: "Admin description",
+};
 
-export default AdminPage
+const AdminPage: React.FC = () => {
+  return <div>AdminPage</div>;
+};
+
+export default AdminPage;

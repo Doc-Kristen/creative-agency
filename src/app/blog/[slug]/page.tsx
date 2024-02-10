@@ -4,6 +4,18 @@ import PostUser from "@/components/post-user/PostUser";
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
 import { ParsedUrlQuery } from "node:querystring";
+import { IPost } from "@/types/IPost";
+
+export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
+  const { slug } = params;
+
+  const post: IPost | null = await getPost(slug);
+
+  return {
+    title: post?.title,
+    description: post?.description,
+  };
+};
 
 interface Params extends ParsedUrlQuery {
   slug: string;

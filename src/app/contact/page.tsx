@@ -3,7 +3,7 @@ import Form from "@/components/form/Form";
 import styles from "./contact.module.scss";
 
 export const metadata = {
-  title: "Contact Page",
+  title: "Contact",
   description: "Contact description",
 };
 

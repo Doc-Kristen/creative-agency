@@ -2,6 +2,11 @@ import PostCard from "@/components/post-card/PostCard";
 import styles from "./blog.module.scss";
 import { getPosts } from "@/lib/data";
 
+export const metadata = {
+  title: "Blog",
+  description: "Blog description",
+};
+
 const BlogPage: React.FC = async () => {
   const posts = await getPosts();
 
