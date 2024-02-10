@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  input,
+  textarea,
+  select {
+    padding: 20px;
+    background-color: $color-bgSoft;
+    border: none;
+    border-radius: 5px;
+    color: $color-text;
+  }
+
+  button {
+    padding: 20px;
+    cursor: pointer;
+    background-color: $color-btn;
+    border: none;
+    border-radius: 5px;
+    color: $color-text;
+    font-weight: bold;
+  }
+}
