@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
-import path from 'path'
+import path from "path";
 
-const __dirname = new URL('.', import.meta.url).pathname
+const __dirname = new URL(".", import.meta.url).pathname;
 
 const nextConfig = {
   sassOptions: {
@@ -12,10 +12,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.pexels.com",
+        hostname: "images.unsplash.com",
       },
     ],
   },
 };
 
-export default nextConfig
+export default nextConfig;
