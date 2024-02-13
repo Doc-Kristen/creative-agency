@@ -6,7 +6,11 @@ import { getPost } from "@/lib/data";
 import { ParsedUrlQuery } from "node:querystring";
 import { IPost } from "@/types/IPost";
 
-export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { slug: string };
+}) => {
   const { slug } = params;
 
   const post: IPost | null = await getPost(slug);
@@ -15,6 +19,17 @@ export const generateMetadata = async ({ params }: { params: { slug: string } })
     title: post?.title,
     description: post?.description,
   };
+};
+
+// FETCH DATA WITH AN API
+const getData = async (slug: string) => {
+  const res = await fetch(`${process.env.PUBLIC_API_URL}/blog/${slug}`);
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return res.json();
 };
 
 interface Params extends ParsedUrlQuery {
@@ -27,7 +42,8 @@ interface Props {
 
 const SinglePostPage: React.FC<Props> = async ({ params }) => {
   const { slug } = params;
-  const post = await getPost(slug);
+  // const post = await getPost(slug);
+  const post = await getData(slug);
 
   return (
     <div className={styles.container}>
