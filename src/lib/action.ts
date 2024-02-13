@@ -80,3 +80,13 @@ export const register = async (formData) => {
     return { error: "Something went wrong" };
   }
 };
+
+export const login = async (formData) => {
+  const { password, email } = Object.fromEntries(formData);
+
+  try {
+    await signIn("credentials", { password, email });
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};
