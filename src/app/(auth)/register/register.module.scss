@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 500px;
+  background-color: $color-bgSoft;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 30px;
+  border-radius: 5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 30px;
+}
+
+.form input {
+  padding: 20px;
+  background-color: $color-bg;
+  color: $color-text;
+  border: none;
+  border-radius: 5px;
+}
+
+.form button {
+  padding: 20px;
+  cursor: pointer;
+  background-color: $color-btn;
+  color: $color-text;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+}

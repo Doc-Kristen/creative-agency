@@ -1,9 +1,10 @@
 "use server";
 
 import { connectToDb } from "./utils";
-import { Post } from "./models";
+import { Post, User } from "./models";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
+import bcrypt from "bcrypt";
 
 export const addPost = async (formData) => {
   const { description, slug, userId, img, title } =
@@ -48,4 +49,34 @@ export const handleGithubLogin = async () => {
 export const handleLogout = async () => {
   "use server";
   await signOut();
+};
+
+export const register = async (formData) => {
+  const { username, password, email, img, passwordRepeat } =
+    Object.fromEntries(formData);
+
+  if (password !== passwordRepeat) {
+    return "password does not match";
+  }
+
+  try {
+    connectToDb();
+    const user = await User.findOne({ email: email });
+
+    if (user) {
+      return "user already exists";
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+    const newUser = new User({
+      username,
+      email,
+      password: hashPassword,
+      img,
+    });
+    await newUser.save();
+    console.log("User saved");
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
 };
