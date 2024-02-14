@@ -5,6 +5,7 @@ import BurgerMenu from "./burger-menu/BurgerMenu";
 
 const Navbar = async () => {
   const session = await auth();
+  console.log('session', session);
 
   return (
     <BurgerMenu>

@@ -3,7 +3,6 @@ import styles from "./links.module.scss";
 import NavLink from "./navLink/NavLink";
 import { handleLogout } from "@/lib/action";
 
-
 const Links = async ({ session }) => {
   const links = [
     {
@@ -24,15 +23,15 @@ const Links = async ({ session }) => {
     },
   ];
 
-  // Временные данные, пока не реализована авторизация
-  const isAdmin = true;
+  const isUserSession = session?.user;
+  const isAdmin = session?.user?.isAdmin;
 
   return (
     <nav className={styles.links}>
       {links.map((link) => (
         <NavLink key={link.title} title={link.title} path={link.path} />
       ))}
-      {session ? (
+      {isUserSession ? (
         <>
           {isAdmin && <NavLink title={"Admin"} path={"/admin"} />}
           <form action={handleLogout}>

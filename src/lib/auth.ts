@@ -2,8 +2,9 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { connectToDb } from "./utils";
 import { User } from "./models";
-import CredentialsProvaider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import { authConfig } from "./auth.config";
 
 const login = async (credentials: {
   email: string;
@@ -35,12 +36,13 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  ...authConfig,
   providers: [
     GitHub({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-    CredentialsProvaider({
+    CredentialsProvider({
       async authorize(credentials) {
         try {
           const user = await login(credentials);
@@ -52,7 +54,7 @@ export const {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+   async signIn({ user, account, profile }) {
       if (account.provider === "github") {
         connectToDb();
         try {
@@ -73,5 +75,6 @@ export const {
       }
       return true;
     },
+    ...authConfig.callbacks,
   },
 });
