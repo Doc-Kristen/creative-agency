@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 
-export const addPost = async (formData) => {
+export const addPost = async (formData: FormData) => {
   const { description, slug, userId, img, title } =
     Object.fromEntries(formData);
   try {
@@ -26,7 +26,7 @@ export const addPost = async (formData) => {
   }
 };
 
-export const deletePost = async (formData) => {
+export const deletePost = async (formData: FormData) => {
   const { id } = Object.fromEntries(formData);
 
   try {
@@ -51,12 +51,24 @@ export const handleLogout = async () => {
   await signOut();
 };
 
-export const register = async (formData) => {
+export const register = async (
+  _previousState:
+    | {
+        error: string;
+        success?: undefined;
+      }
+    | {
+        success: boolean;
+        error?: undefined;
+      }
+    | undefined,
+  formData: FormData
+) => {
   const { username, password, email, img, passwordRepeat } =
     Object.fromEntries(formData);
 
   if (password !== passwordRepeat) {
-    return "password does not match";
+    return { error: "Password does not match" };
   }
 
   try {
@@ -64,7 +76,7 @@ export const register = async (formData) => {
     const user = await User.findOne({ email: email });
 
     if (user) {
-      return "user already exists";
+      return { error: "User already exists" };
     }
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -76,17 +88,21 @@ export const register = async (formData) => {
     });
     await newUser.save();
     console.log("User saved");
+    return { success: true };
   } catch (error) {
     return { error: "Something went wrong" };
   }
 };
 
-export const login = async (formData) => {
+export const login = async (_: any, formData: FormData) => {
   const { password, email } = Object.fromEntries(formData);
 
   try {
-    await signIn("credentials", { password, email });
-  } catch (error) {
-    return { error: "Something went wrong" };
+    await signIn("credentials", { email, password });
+  } catch (error: any) {
+    if (error.type === "CredentialsSignin") {
+      return { error: "Invalid username or password" };
+    }
+    throw error;
   }
 };

@@ -20,14 +20,12 @@ const login = async (credentials: {
       credentials.password,
       user.password
     );
-    console.log('isPasswordCorrect', isPasswordCorrect);
 
     if (!isPasswordCorrect) {
       throw new Error("Password or login incorrect");
     }
     return user;
   } catch (error) {
-    console.error(error);
     throw new Error("Failed to login");
   }
 };
@@ -70,7 +68,6 @@ export const {
             await newUser.save();
           }
         } catch (err) {
-          console.log(err);
           return false;
         }
       }

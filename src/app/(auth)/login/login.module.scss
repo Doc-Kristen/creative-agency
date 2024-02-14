@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .wrapper {
+    width: 500px;
+    background-color: $color-bgSoft;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    border-radius: 5px;
+  }
+
+  .github {
+    width: 100%;
+    padding: 20px;
+    background-color: $color-default-white;
+    color: $color-default-black;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity $trans-default;
+
+    @include hover-focus {
+      opacity: 0.8;
+    }
+  }
+}
