@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 import { StateAdminForm } from "@/types/utils.type";
+import { PAGE_ROUTES } from "./helpers/const";
 
 export const addPost = async (state: StateAdminForm, formData: FormData) => {
   const { description, slug, userId, img, title } =
@@ -20,7 +21,7 @@ export const addPost = async (state: StateAdminForm, formData: FormData) => {
       title,
     });
     await newPost.save();
-    revalidatePath("/blog");
+    revalidatePath(PAGE_ROUTES.blog);
     return state;
   } catch (error) {
     return { error: "Something went wrong" };
@@ -34,8 +35,8 @@ export const deletePost = async (formData: FormData) => {
     connectToDb();
 
     await Post.findByIdAndDelete(id);
-    revalidatePath("/blog");
-    revalidatePath("/admin");
+    revalidatePath(PAGE_ROUTES.blog);
+    revalidatePath(PAGE_ROUTES.admin);
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -56,7 +57,7 @@ export const addUser = async (prevState: unknown, formData: FormData) => {
 
     await newUser.save();
     console.log("saved to db");
-    revalidatePath("/admin");
+    revalidatePath(PAGE_ROUTES.admin);
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -72,7 +73,7 @@ export const deleteUser = async (formData: FormData) => {
     await Post.deleteMany({ userId: id });
     await User.findByIdAndDelete(id);
     console.log("deleted from db");
-    revalidatePath("/admin");
+    revalidatePath(PAGE_ROUTES.admin);
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };

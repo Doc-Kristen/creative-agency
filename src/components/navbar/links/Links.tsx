@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./links.module.scss";
 import NavLink from "./navLink/NavLink";
 import { handleLogout } from "@/lib/action";
-import { IUser } from "@/types/IUser.type";
+import { PAGE_ROUTES } from "@/lib/helpers/const";
 
 interface LinksProps {
   session: any;
@@ -12,19 +12,19 @@ const Links: React.FC<LinksProps> = async ({ session }) => {
   const links = [
     {
       title: "Homepage",
-      path: "/",
+      path: PAGE_ROUTES.main,
     },
     {
       title: "About",
-      path: "/about",
+      path: PAGE_ROUTES.about,
     },
     {
       title: "Contact",
-      path: "/contact",
+      path: PAGE_ROUTES.contact,
     },
     {
       title: "Blog",
-      path: "/blog",
+      path: PAGE_ROUTES.blog,
     },
   ];
 
@@ -38,13 +38,13 @@ const Links: React.FC<LinksProps> = async ({ session }) => {
       ))}
       {isUserSession ? (
         <>
-          {isAdmin && <NavLink title={"Admin"} path={"/admin"} />}
+          {isAdmin && <NavLink title={"Admin"} path={PAGE_ROUTES.admin} />}
           <form action={handleLogout}>
             <button className={styles.logout}>Logout</button>
           </form>
         </>
       ) : (
-        <NavLink title={"Login"} path={"/login"} />
+        <NavLink title={"Login"} path={PAGE_ROUTES.login} />
       )}
     </nav>
   );

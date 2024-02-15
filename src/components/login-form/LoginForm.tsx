@@ -4,6 +4,7 @@ import { useFormState } from "react-dom";
 import Link from "next/link";
 import { login } from "@/lib/action";
 import styles from "./login-form.module.scss";
+import { PAGE_ROUTES } from "@/lib/helpers/const";
 
 const LoginForm: React.FC = () => {
   const [state, formAction] = useFormState(login, undefined);
@@ -15,7 +16,7 @@ const LoginForm: React.FC = () => {
         <input type="password" name="password" placeholder="password" />
         <button>Login</button>
         {state?.error}
-        <Link href={"/register"}>
+        <Link href={PAGE_ROUTES.register}>
           {"Don't have an account?"} <b>Register</b>
         </Link>
       </form>

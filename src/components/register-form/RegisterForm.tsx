@@ -6,12 +6,13 @@ import { useFormState } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
+import { PAGE_ROUTES } from "@/lib/helpers/const";
 
 const RegisterForm: React.FC = () => {
   const [state, formAction] = useFormState(register, undefined);
   const router = useRouter();
   useEffect(() => {
-    state?.success && router.push("/login");
+    state?.success && router.push(PAGE_ROUTES.login);
   }, [router, state?.success]);
 
   return (
@@ -27,7 +28,9 @@ const RegisterForm: React.FC = () => {
         />
         <button>Register</button>
         {state?.error}
-        <Link href={'/login'}>Have an account? <b>Login</b></Link>
+        <Link href={PAGE_ROUTES.login}>
+          Have an account? <b>Login</b>
+        </Link>
       </form>
     </div>
   );

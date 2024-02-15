@@ -1,11 +1,9 @@
-import { NextAuthConfig, User } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import { Session } from "next-auth/types";
-import { NextRequest } from "next/server";
+import { NextAuthConfig } from "next-auth";
+import { PAGE_ROUTES } from "./helpers/const";
 
 export const authConfig = {
   pages: {
-    signIn: "/login",
+    signIn: PAGE_ROUTES.login,
   },
   providers: [],
   callbacks: {
@@ -26,9 +24,9 @@ export const authConfig = {
     },
     authorized({ auth, request: { nextUrl } }) {
       const user = auth?.user;
-      const isOnAdminPanel = nextUrl?.pathname.startsWith("/admin");
-      const isOnBlogPage = nextUrl?.pathname.startsWith("/blog");
-      const isOnLoginPage = nextUrl?.pathname.startsWith("/login");
+      const isOnAdminPanel = nextUrl?.pathname.startsWith(PAGE_ROUTES.admin);
+      const isOnBlogPage = nextUrl?.pathname.startsWith(PAGE_ROUTES.blog);
+      const isOnLoginPage = nextUrl?.pathname.startsWith(PAGE_ROUTES.blog);
 
       // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
 
@@ -45,7 +43,7 @@ export const authConfig = {
       // ONLY UNAUTHENTICATED USERS CAN REACH THE LOGIN PAGE
 
       if (isOnLoginPage && user) {
-        return Response.redirect(new URL("/", nextUrl));
+        return Response.redirect(new URL(PAGE_ROUTES.main, nextUrl));
       }
 
       return true;
