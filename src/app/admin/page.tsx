@@ -13,7 +13,7 @@ export const metadata = {
 
 const AdminPage: React.FC = async () => {
   const session = await auth();
-  const userId = session?.user?.id;
+  const userId = session ? session?.user?.id : "";
 
   return (
     <div className={styles.container}>
@@ -34,7 +34,7 @@ const AdminPage: React.FC = async () => {
           </Suspense>
         </div>
         <div className={styles.col}>
-          <AdminUserForm userId={userId} />
+          <AdminUserForm />
         </div>
       </div>
     </div>

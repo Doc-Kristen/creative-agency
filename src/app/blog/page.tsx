@@ -1,6 +1,5 @@
 import PostCard from "@/components/post-card/PostCard";
 import styles from "./blog.module.scss";
-// import { getPosts } from "@/lib/data";
 
 export const metadata = {
   title: "Blog",

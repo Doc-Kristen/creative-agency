@@ -3,7 +3,7 @@ import Image from "next/image";
 import { deletePost } from "@/lib/action";
 import styles from "./admin-posts.module.scss";
 
-const AdminPosts = async () => {
+const AdminPosts: React.FC = async () => {
   const posts = await getPosts();
 
   return (

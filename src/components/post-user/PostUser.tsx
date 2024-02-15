@@ -2,7 +2,11 @@ import Image from "next/image";
 import { getUser } from "@/lib/data";
 import styles from "./post-user.module.scss";
 
-const PostUser: React.FC<{ userId: string }> = async ({ userId }) => {
+interface PostUserProps {
+  userId: string;
+}
+
+const PostUser: React.FC<PostUserProps> = async ({ userId }) => {
   const user = await getUser(userId);
 
   return (

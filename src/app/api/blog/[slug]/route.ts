@@ -1,8 +1,15 @@
 import { Post } from "@/lib/models";
 import { connectToDb } from "@/lib/utils";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (request, { params }) => {
+interface Params {
+  slug: string;
+}
+
+export const GET = async (
+  _req: NextRequest,
+  { params }: { params: Params }
+) => {
   const { slug } = params;
   try {
     connectToDb();
@@ -14,7 +21,10 @@ export const GET = async (request, { params }) => {
   }
 };
 
-export const DELETE = async (request, { params }) => {
+export const DELETE = async (
+  _req: NextRequest,
+  { params }: { params: Params }
+) => {
   const { slug } = params;
   try {
     connectToDb();

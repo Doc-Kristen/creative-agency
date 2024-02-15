@@ -3,14 +3,13 @@ import styles from "./single-post-page.module.scss";
 import PostUser from "@/components/post-user/PostUser";
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
-import { ParsedUrlQuery } from "node:querystring";
-import { IPost } from "@/types/IPost";
+import { IPost } from "@/types/IPost.type";
+import type { InferGetServerSidePropsType } from "next";
+import { getServerSideProps } from "next/dist/build/templates/pages";
 
 export const generateMetadata = async ({
   params,
-}: {
-  params: { slug: string };
-}) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { slug } = params;
 
   const post: IPost | null = await getPost(slug);
@@ -32,15 +31,9 @@ const getData = async (slug: string) => {
   return res.json();
 };
 
-interface Params extends ParsedUrlQuery {
-  slug: string;
-}
-
-interface Props {
-  params: Params;
-}
-
-const SinglePostPage: React.FC<Props> = async ({ params }) => {
+const SinglePostPage: React.FC<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = async ({ params }) => {
   const { slug } = params;
   // const post = await getPost(slug);
   const post = await getData(slug);

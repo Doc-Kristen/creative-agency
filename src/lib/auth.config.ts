@@ -1,3 +1,8 @@
+import { NextAuthConfig, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth/types";
+import { NextRequest } from "next/server";
+
 export const authConfig = {
   pages: {
     signIn: "/login",
@@ -14,16 +19,16 @@ export const authConfig = {
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id;
-        session.user.isAdmin = token.isAdmin;
+        session.user.id = token.id as string;
+        session.user.isAdmin = token.isAdmin as boolean;
       }
       return session;
     },
-    authorized({ auth, request }) {
+    authorized({ auth, request: { nextUrl } }) {
       const user = auth?.user;
-      const isOnAdminPanel = request.nextUrl?.pathname.startsWith("/admin");
-      const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blog");
-      const isOnLoginPage = request.nextUrl?.pathname.startsWith("/login");
+      const isOnAdminPanel = nextUrl?.pathname.startsWith("/admin");
+      const isOnBlogPage = nextUrl?.pathname.startsWith("/blog");
+      const isOnLoginPage = nextUrl?.pathname.startsWith("/login");
 
       // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
 
@@ -40,10 +45,10 @@ export const authConfig = {
       // ONLY UNAUTHENTICATED USERS CAN REACH THE LOGIN PAGE
 
       if (isOnLoginPage && user) {
-        return Response.redirect(new URL("/", request.nextUrl));
+        return Response.redirect(new URL("/", nextUrl));
       }
 
       return true;
     },
   },
-};
+} satisfies NextAuthConfig;

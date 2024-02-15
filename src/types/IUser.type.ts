@@ -4,4 +4,5 @@ export interface IUser {
   password: string;
   img?: string;
   isAdmin: boolean;
+  id: string;
 }

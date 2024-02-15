@@ -3,7 +3,7 @@ import { getUsers } from "@/lib/data";
 import { deleteUser } from "@/lib/action";
 import styles from "./admin-users.module.scss";
 
-const AdminUsers = async () => {
+const AdminUsers: React.FC = async () => {
   const users = await getUsers();
 
   return (

@@ -2,7 +2,7 @@ import { handleGithubLogin } from "@/lib/action";
 import LoginForm from "@/components/login-form/LoginForm";
 import styles from "./login.module.scss";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

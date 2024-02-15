@@ -8,7 +8,7 @@ const statistics = [
   { title: "99 K+", description: "Positive feedback" },
 ];
 
-const AboutHero = () => {
+const AboutHero: React.FC = () => {
   return (
     <section className={styles.container}>
       <div className={styles.textContainer}>

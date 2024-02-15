@@ -1,15 +1,13 @@
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
+import bcrypt from "bcrypt";
 import { connectToDb } from "./utils";
 import { User } from "./models";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
 import { authConfig } from "./auth.config";
+import { ICredentials } from "@/types/utils.type";
 
-const login = async (credentials: {
-  email: string;
-  password: string | Buffer;
-}) => {
+const login = async (credentials: Partial<ICredentials>) => {
   try {
     connectToDb();
     const user = await User.findOne({ email: credentials.email });
@@ -18,7 +16,7 @@ const login = async (credentials: {
       throw new Error("User not found");
     }
     const isPasswordCorrect = await bcrypt.compare(
-      credentials.password,
+      credentials.password as string,
       user.password
     );
 
@@ -54,17 +52,17 @@ export const {
     }),
   ],
   callbacks: {
-   async signIn({ user, account, profile }) {
-      if (account.provider === "github") {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "github") {
         connectToDb();
         try {
-          const user = await User.findOne({ email: profile.email });
+          const user = await User.findOne({ email: profile?.email });
 
           if (!user) {
             const newUser = new User({
-              username: profile.login,
-              email: profile.email,
-              image: profile.avatar_url,
+              username: profile?.login,
+              email: profile?.email,
+              image: profile?.avatar_url,
             });
 
             await newUser.save();

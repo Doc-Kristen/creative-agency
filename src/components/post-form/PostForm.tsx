@@ -3,9 +3,16 @@
 import { useFormState } from "react-dom";
 import styles from "./post-form.module.scss";
 import { addPost } from "@/lib/action";
+import { StateAdminForm } from "@/types/utils.type";
 
-const AdminPostForm: React.FC = ({ userId }) => {
-  const [state, formAction] = useFormState(addPost, undefined);
+interface AdminPostFormProps {
+  userId: string;
+}
+
+const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
+  const [state, formAction] = useFormState<StateAdminForm, FormData>(addPost, {
+    error: null,
+  });
 
   return (
     <form action={formAction} className={styles.container}>

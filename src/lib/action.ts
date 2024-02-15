@@ -5,8 +5,9 @@ import { Post, User } from "./models";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
+import { StateAdminForm } from "@/types/utils.type";
 
-export const addPost = async (_prevState, formData: FormData) => {
+export const addPost = async (state: StateAdminForm, formData: FormData) => {
   const { description, slug, userId, img, title } =
     Object.fromEntries(formData);
   try {
@@ -20,9 +21,9 @@ export const addPost = async (_prevState, formData: FormData) => {
     });
     await newPost.save();
     revalidatePath("/blog");
+    return state;
   } catch (error) {
-    console.log(error);
-    throw new Error("Post not added");
+    return { error: "Something went wrong" };
   }
 };
 
@@ -41,7 +42,7 @@ export const deletePost = async (formData: FormData) => {
   }
 };
 
-export const addUser = async (prevState, formData) => {
+export const addUser = async (prevState: unknown, formData: FormData) => {
   const { username, email, password, img } = Object.fromEntries(formData);
 
   try {
@@ -62,7 +63,7 @@ export const addUser = async (prevState, formData) => {
   }
 };
 
-export const deleteUser = async (formData) => {
+export const deleteUser = async (formData: FormData) => {
   const { id } = Object.fromEntries(formData);
 
   try {
@@ -116,7 +117,7 @@ export const register = async (
       return { error: "User already exists" };
     }
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
+    const hashPassword = await bcrypt.hash(password as string, salt);
     const newUser = new User({
       username,
       email,

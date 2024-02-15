@@ -7,7 +7,7 @@ export const metadata = {
   description: "Contact description",
 };
 
-const ContactPage = () => {
+const ContactPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>

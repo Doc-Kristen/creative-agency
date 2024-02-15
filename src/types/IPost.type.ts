@@ -4,4 +4,5 @@ export interface IPost {
   img?: string;
   userId: string;
   slug: string;
+  id: string;
 }

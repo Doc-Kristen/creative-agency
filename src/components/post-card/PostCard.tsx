@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./post-card.module.scss";
-import { IPost } from "@/types/IPost";
+import { IPost } from "@/types/IPost.type";
 
 const PostCard: React.FC<{ post: IPost }> = ({ post }) => {
   const formattedDate = new Date().toString().split(" ").slice(1, 3).join(" ");

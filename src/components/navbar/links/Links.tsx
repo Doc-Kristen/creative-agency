@@ -2,8 +2,13 @@ import React from "react";
 import styles from "./links.module.scss";
 import NavLink from "./navLink/NavLink";
 import { handleLogout } from "@/lib/action";
+import { IUser } from "@/types/IUser.type";
 
-const Links = async ({ session }) => {
+interface LinksProps {
+  session: any;
+}
+
+const Links: React.FC<LinksProps> = async ({ session }) => {
   const links = [
     {
       title: "Homepage",

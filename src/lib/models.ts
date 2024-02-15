@@ -1,4 +1,4 @@
-import { IPost } from "@/types/IPost";
+import { IPost } from "@/types/IPost.type";
 import { IUser } from "@/types/IUser";
 import mongoose, { Model } from "mongoose";
 
