@@ -21,24 +21,12 @@ export const generateMetadata = async ({
   };
 };
 
-// FETCH DATA WITH AN API
-const getData = async (slug: string) => {
-  const res = await fetch(`${process.env.PUBLIC_API_URL}/blog/${slug}`);
-
-  if (!res.ok) {
-    throw new Error("Something went wrong");
-  }
-
-  return res.json();
-};
-
 const SinglePostPage: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = async ({ params }) => {
   const { slug } = params;
-  // const post = await getPost(slug);
-  const post = await getData(slug);
-  const date = formatDate(post.createdAt);
+  const post = await getPost(slug);
+  const date = formatDate(post?.createdAt as string);
 
   return (
     <div className={styles.container}>
