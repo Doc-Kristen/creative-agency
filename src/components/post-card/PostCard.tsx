@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./post-card.module.scss";
 import { IPost } from "@/types/IPost.type";
+import { formatDate } from "@/lib/utils";
 
 const PostCard: React.FC<{ post: IPost }> = ({ post }) => {
-  const formattedDate = new Date().toString().split(" ").slice(1, 3).join(" ");
+  const date = formatDate(post.createdAt);
   return (
     <article className={styles.container}>
       <div className={styles.top}>
@@ -13,8 +14,8 @@ const PostCard: React.FC<{ post: IPost }> = ({ post }) => {
             <Image src={post.img} alt="" fill className={styles.img} />
           </div>
         )}
-        <time dateTime={formattedDate} className={styles.date}>
-          {formattedDate}
+        <time dateTime={post.createdAt} className={styles.date}>
+          {date}
         </time>
       </div>
       <div className={styles.bottom}>

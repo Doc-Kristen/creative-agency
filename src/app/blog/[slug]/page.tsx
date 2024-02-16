@@ -6,6 +6,7 @@ import { getPost } from "@/lib/data";
 import { IPost } from "@/types/IPost.type";
 import type { InferGetServerSidePropsType } from "next";
 import { getServerSideProps } from "next/dist/build/templates/pages";
+import { formatDate } from "@/lib/utils";
 
 export const generateMetadata = async ({
   params,
@@ -37,6 +38,7 @@ const SinglePostPage: React.FC<
   const { slug } = params;
   // const post = await getPost(slug);
   const post = await getData(slug);
+  const date = formatDate(post.createdAt);
 
   return (
     <div className={styles.container}>
@@ -52,6 +54,7 @@ const SinglePostPage: React.FC<
             <PostUser userId={post.userId} />
           </Suspense>
         )}
+        <div className={styles.date}>{date}</div>
         <div className={styles.content}>{post?.description}</div>
       </div>
     </div>

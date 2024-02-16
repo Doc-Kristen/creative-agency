@@ -5,4 +5,5 @@ export interface IPost {
   userId: string;
   slug: string;
   id: string;
+  createdAt: string;
 }

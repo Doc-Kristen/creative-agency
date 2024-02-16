@@ -27,6 +27,6 @@ export const connectToDb = async (): Promise<void> => {
 
 // Функция для форматирования даты в удобочитаемый формат
 export const formatDate = (date: string) => {
-  const formattedDate = dayjs(date).format("DD.MM.YY, HH:mm");
+  const formattedDate = dayjs(date).format("DD.MM.YY");
   return formattedDate;
 };
