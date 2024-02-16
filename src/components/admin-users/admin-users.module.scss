@@ -25,4 +25,19 @@
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity $trans-default, background-color $trans-default;
+
+  @include hover-focus {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: $color-shiraz;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }

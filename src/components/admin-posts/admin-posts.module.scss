@@ -22,6 +22,20 @@
     color: $color-text;
     border-radius: 5px;
     border: none;
+    transition: opacity $trans-default, background-color $trans-default;
     cursor: pointer;
+
+    @include hover-focus {
+      opacity: 0.8;
+    }
+
+    &:active {
+      background-color: $color-shiraz;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 }

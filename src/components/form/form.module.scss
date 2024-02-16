@@ -20,15 +20,15 @@
     font-weight: bold;
     border: none;
     border-radius: 5px;
+    transition: opacity $trans-default, background-color $trans-default;
     cursor: pointer;
-    transition: opacity $trans-default;
 
     @include hover-focus {
       opacity: 0.8;
     }
 
     &:active {
-      opacity: 0.8;
+      background-color: $color-jacksons-purple;
     }
 
     &:disabled {
