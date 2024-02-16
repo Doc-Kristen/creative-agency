@@ -5,6 +5,7 @@ import BurgerMenu from "./burger-menu/BurgerMenu";
 
 const Navbar: React.FC = async () => {
   const session = await auth();
+  console.log(session);
 
   return (
     <BurgerMenu>

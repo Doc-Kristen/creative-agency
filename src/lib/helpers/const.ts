@@ -6,6 +6,7 @@ const PAGE_ROUTES = {
   admin: "/admin",
   login: "/login",
   register: "/register",
+  profile: "/profile",
 } as const;
 
 export { PAGE_ROUTES };

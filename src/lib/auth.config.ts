@@ -26,7 +26,8 @@ export const authConfig = {
       const user = auth?.user;
       const isOnAdminPanel = nextUrl?.pathname.startsWith(PAGE_ROUTES.admin);
       const isOnBlogPage = nextUrl?.pathname.startsWith(PAGE_ROUTES.blog);
-      const isOnLoginPage = nextUrl?.pathname.startsWith(PAGE_ROUTES.blog);
+      const isOnLoginPage = nextUrl?.pathname.startsWith(PAGE_ROUTES.login);
+      const isOnProfilePage = nextUrl?.pathname.startsWith(PAGE_ROUTES.profile);
 
       // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
 
@@ -37,6 +38,12 @@ export const authConfig = {
       // ONLY AUTHENTICATED USERS CAN REACH THE BLOG PAGE
 
       if (isOnBlogPage && !user) {
+        return false;
+      }
+
+      // ONLY AUTHENTICATED USERS CAN REACH THE PROFILE PAGE
+
+      if (isOnProfilePage && !user) {
         return false;
       }
 

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import mongoose from "mongoose";
 
 interface ConnectionObject {
@@ -6,6 +7,7 @@ interface ConnectionObject {
 
 const connection: ConnectionObject = {};
 
+// Функция для соединения с базой данных MongoDB
 export const connectToDb = async (): Promise<void> => {
   try {
     if (connection.isConnected) {
@@ -21,4 +23,10 @@ export const connectToDb = async (): Promise<void> => {
     console.log(error);
     throw new Error(String(error));
   }
+};
+
+// Функция для форматирования даты в удобочитаемый формат
+export const formatDate = (date: string) => {
+  const formattedDate = dayjs(date).format("DD.MM.YY, HH:mm");
+  return formattedDate;
 };

@@ -12,6 +12,17 @@ export const getPosts = async () => {
   }
 };
 
+export const getPostsByUserId = async (userId: string) => {
+  try {
+    connectToDb();
+    const posts = await Post.find({ userId });
+    return posts;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get posts");
+  }
+};
+
 export const getPost = async (slug: string) => {
   try {
     connectToDb();

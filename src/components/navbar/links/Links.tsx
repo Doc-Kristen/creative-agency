@@ -9,6 +9,10 @@ interface LinksProps {
 }
 
 const Links: React.FC<LinksProps> = async ({ session }) => {
+  const isUserSession = session?.user;
+  const isAdmin = session?.user?.isAdmin;
+  const userId = session?.user.id;
+
   const links = [
     {
       title: "Homepage",
@@ -26,10 +30,11 @@ const Links: React.FC<LinksProps> = async ({ session }) => {
       title: "Blog",
       path: PAGE_ROUTES.blog,
     },
+    {
+      title: "Profile",
+      path: `${PAGE_ROUTES.profile}/${userId}`,
+    },
   ];
-
-  const isUserSession = session?.user;
-  const isAdmin = session?.user?.isAdmin;
 
   return (
     <nav className={styles.links}>

@@ -1,11 +1,13 @@
-import { getPosts } from "@/lib/data";
 import Image from "next/image";
 import { deletePost } from "@/lib/action";
 import styles from "./admin-posts.module.scss";
+import { IPost } from "@/types/IPost.type";
 
-const AdminPosts: React.FC = async () => {
-  const posts = await getPosts();
+interface AdminPostsProps {
+  posts: IPost[];
+}
 
+const AdminPosts: React.FC<AdminPostsProps> = ({ posts }) => {
   return (
     <div className={styles.container}>
       <h1>Posts</h1>

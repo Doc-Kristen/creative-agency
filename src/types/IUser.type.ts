@@ -5,4 +5,5 @@ export interface IUser {
   img?: string;
   isAdmin: boolean;
   id: string;
+  createdAt: string;
 }

@@ -5,6 +5,7 @@ import AdminPosts from "@/components/admin-posts/AdminPosts";
 import AdminUsers from "@/components/admin-users/AdminUsers";
 import AdminUserForm from "@/components/admin-user-form/AdminUserForm";
 import { auth } from "@/lib/auth";
+import { getPosts } from "@/lib/data";
 
 export const metadata = {
   title: "Admin",
@@ -14,13 +15,14 @@ export const metadata = {
 const AdminPage: React.FC = async () => {
   const session = await auth();
   const userId = session ? session?.user?.id : "";
+  const posts = await getPosts();
 
   return (
     <div className={styles.container}>
       <div className={styles.row}>
         <div className={styles.col}>
           <Suspense fallback={<div>Loading...</div>}>
-            <AdminPosts />
+            <AdminPosts posts={posts} />
           </Suspense>
         </div>
         <div className={styles.col}>
