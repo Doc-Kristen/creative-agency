@@ -1,5 +1,6 @@
 import PostCard from "@/components/post-card/PostCard";
 import styles from "./blog.module.scss";
+import { IPost } from "@/types/IPost.type";
 
 export const metadata = {
   title: "Blog",
@@ -24,7 +25,7 @@ const BlogPage: React.FC = async () => {
 
   return (
     <ul className={styles.container}>
-      {posts.map((post) => {
+      {posts.map((post: IPost) => {
         return (
           <li className={styles.post} key={post.id}>
             <PostCard post={post} />

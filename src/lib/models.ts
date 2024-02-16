@@ -1,5 +1,5 @@
 import { IPost } from "@/types/IPost.type";
-import { IUser } from "@/types/IUser";
+import { IUser } from "@/types/IUser.type";
 import mongoose, { Model } from "mongoose";
 
 const userSchema = new mongoose.Schema<IUser>(
