@@ -1,4 +1,4 @@
-import { getUser, getPostsByUserId } from "@/lib/data";
+import { getUserById, getPostsByUserId } from "@/lib/data";
 import type { InferGetServerSidePropsType } from "next";
 import { getServerSideProps } from "next/dist/build/templates/pages";
 import { Suspense } from "react";
@@ -11,7 +11,7 @@ const UserProfilePage: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = async ({ params }) => {
   const { id } = params;
-  const user = await getUser(id);
+  const user = await getUserById(id);
   const userId = user?.id;
   const posts = await getPostsByUserId(userId);
 

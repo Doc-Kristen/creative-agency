@@ -34,10 +34,21 @@ export const getPost = async (slug: string) => {
   }
 };
 
-export const getUser = async (userId: string) => {
+export const getUserById = async (userId: string) => {
   try {
     connectToDb();
     const user = await User.findById(userId);
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to get user");
+  }
+};
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    connectToDb();
+    const user = await User.findOne({ email });
     return user;
   } catch (error) {
     console.error(error);

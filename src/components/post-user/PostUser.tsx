@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getUser } from "@/lib/data";
+import { getUserById } from "@/lib/data";
 import styles from "./post-user.module.scss";
 
 interface PostUserProps {
@@ -7,7 +7,7 @@ interface PostUserProps {
 }
 
 const PostUser: React.FC<PostUserProps> = async ({ userId }) => {
-  const user = await getUser(userId);
+  const user = await getUserById(userId);
 
   return (
     <div className={styles.container}>
