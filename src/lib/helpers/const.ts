@@ -9,4 +9,6 @@ const PAGE_ROUTES = {
   profile: "/profile",
 } as const;
 
-export { PAGE_ROUTES };
+const PROVIDERS = ["google", "github"];
+
+export { PAGE_ROUTES, PROVIDERS };

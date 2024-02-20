@@ -1,11 +1,13 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import bcrypt from "bcrypt";
 import { connectToDb } from "./utils";
 import { User } from "./models";
 import { authConfig } from "./auth.config";
 import { ICredentials } from "@/types/utils.type";
+import { PROVIDERS } from "./helpers/const";
 
 const login = async (credentials: Partial<ICredentials>) => {
   try {
@@ -36,6 +38,10 @@ export const {
 } = NextAuth({
   ...authConfig,
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
     GitHub({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
@@ -52,17 +58,18 @@ export const {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (account?.provider === "github") {
+    async signIn({ account, profile }) {
+      if (account?.provider && PROVIDERS.includes(account.provider)) {
         connectToDb();
         try {
           const user = await User.findOne({ email: profile?.email });
+          const avatarUrl = profile?.avatar_url || profile?.picture || null;
 
           if (!user) {
             const newUser = new User({
-              username: profile?.login,
+              username: profile?.name,
               email: profile?.email,
-              image: profile?.avatar_url,
+              img: avatarUrl,
             });
 
             await newUser.save();
