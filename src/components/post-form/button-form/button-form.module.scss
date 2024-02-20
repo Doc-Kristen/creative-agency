@@ -1,0 +1,23 @@
+.button {
+  padding: 20px;
+  background-color: $color-btn;
+  border: none;
+  border-radius: 5px;
+  color: $color-text;
+  font-weight: bold;
+  transition: opacity $trans-default, background-color $trans-default;
+  cursor: pointer;
+
+  @include hover-focus {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: $color-jacksons-purple;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}

@@ -11,6 +11,7 @@
     "lint": "npm run lint:js && next lint && npm run lint:styles"
   },
   "dependencies": {
+    "@vercel/blob": "^0.22.0",
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.10",
     "mongoose": "^8.1.1",

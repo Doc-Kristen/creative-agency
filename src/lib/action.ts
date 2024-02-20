@@ -7,23 +7,41 @@ import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 import { StateAdminForm } from "@/types/utils.type";
 import { PAGE_ROUTES } from "./helpers/const";
+import { put } from "@vercel/blob";
+
+export const uploadImage = async (formData: FormData) => {
+  const imageFile = formData.get("img") as File;
+  console.log("imageFile", imageFile);
+  if (imageFile && imageFile.size) {
+    const blob = await put(imageFile.name, imageFile, {
+      access: "public",
+    });
+    return blob.url;
+  }
+};
 
 export const addPost = async (state: StateAdminForm, formData: FormData) => {
-  const { description, slug, userId, img, title } =
-    Object.fromEntries(formData);
   try {
     connectToDb();
+    const imgURL = (await uploadImage(formData)) || null;
+
+    const { description, slug, userId, title } = Object.fromEntries(formData);
+    console.log(description, slug, userId, title);
+
     const newPost = new Post({
       description,
       slug,
       userId,
-      img,
+      img: imgURL,
       title,
     });
+
     await newPost.save();
     revalidatePath(PAGE_ROUTES.blog);
+    revalidatePath(PAGE_ROUTES.profile);
     return state;
   } catch (error) {
+    console.log(error);
     return { error: "Something went wrong" };
   }
 };
@@ -89,7 +107,6 @@ export const handleGoogleLogin = async () => {
   "use server";
   await signIn("google");
 };
-
 
 export const handleLogout = async () => {
   "use server";
