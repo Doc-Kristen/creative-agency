@@ -1,13 +1,13 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import GitHub from "next-auth/providers/github";
+import GitHubProvider from "next-auth/providers/github";
 import bcrypt from "bcrypt";
-import { connectToDb } from "./utils";
 import { User } from "./models";
+import { connectToDb } from "./utils";
+import { PROVIDERS } from "./helpers/const";
 import { authConfig } from "./auth.config";
 import { ICredentials } from "@/types/utils.type";
-import { PROVIDERS } from "./helpers/const";
 
 const login = async (credentials: Partial<ICredentials>) => {
   try {
@@ -42,7 +42,7 @@ export const {
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
     }),
-    GitHub({
+    GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
