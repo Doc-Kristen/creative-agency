@@ -1,6 +1,5 @@
 import { NextAuthConfig } from "next-auth";
 import { PAGE_ROUTES } from "./helpers/const";
-import { getUserByEmail } from "./data";
 
 export const authConfig = {
   pages: {
@@ -9,14 +8,6 @@ export const authConfig = {
   providers: [],
   callbacks: {
     // FOR MORE DETAIL ABOUT CALLBACK FUNCTIONS CHECK https://next-auth.js.org/configuration/callbacks
-    async jwt({ token, user }) {
-      if (user) {
-        const userMongoData = await getUserByEmail(user?.email as string);
-        token.id = userMongoData?.id;
-        token.isAdmin = userMongoData?.isAdmin;
-      }
-      return token;
-    },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;

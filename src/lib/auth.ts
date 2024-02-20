@@ -73,6 +73,14 @@ export const {
       }
       return true;
     },
+    async jwt({ token, user }) {
+      if (user) {
+        const userMongoData = await User.findOne({ email: user?.email });
+        token.id = userMongoData?.id;
+        token.isAdmin = userMongoData?.isAdmin;
+      }
+      return token;
+    },
     ...authConfig.callbacks,
   },
 });
