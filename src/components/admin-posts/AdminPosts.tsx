@@ -24,6 +24,7 @@ const AdminPosts: React.FC<AdminPostsProps> = ({ posts }) => {
           </div>
           <form action={deletePost}>
             <input type="hidden" name="id" value={post.id} />
+            <input type="hidden" name="img" value={post.img} />
             <button className={styles.postButton}>Delete</button>
           </form>
         </div>

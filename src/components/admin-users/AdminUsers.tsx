@@ -22,6 +22,7 @@ const AdminUsers: React.FC = async () => {
           </div>
           <form action={deleteUser}>
             <input type="hidden" name="id" value={user.id} />
+            <input type="hidden" name="img" value={user.img} />
             <button className={styles.userButton}>Delete</button>
           </form>
         </div>

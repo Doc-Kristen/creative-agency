@@ -7,8 +7,13 @@ import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 import { StateAdminForm } from "@/types/utils.type";
 import { PAGE_ROUTES } from "./helpers/const";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "./firebase";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { firebaseConfig, storage } from "./firebase";
 
 const uploadImage = async (formData: FormData) => {
   try {
@@ -47,6 +52,23 @@ const uploadImage = async (formData: FormData) => {
   }
 };
 
+const deleteImageInStorage = async (imageUrl: string | undefined) => {
+  const isValidUrl = imageUrl?.startsWith(
+    `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}`
+  );
+
+  if (isValidUrl) {
+    const desertRef = ref(storage, imageUrl);
+
+    try {
+      await deleteObject(desertRef);
+    } catch (error) {
+      console.log(error);
+      return { error: "The image has not been deleted" };
+    }
+  }
+};
+
 export const addPost = async (state: StateAdminForm, formData: FormData) => {
   try {
     connectToDb();
@@ -74,12 +96,15 @@ export const addPost = async (state: StateAdminForm, formData: FormData) => {
 };
 
 export const deletePost = async (formData: FormData) => {
-  const { id } = Object.fromEntries(formData);
+  const { id, img } = Object.fromEntries(formData);
 
   try {
     connectToDb();
-
+    if (img) {
+      await deleteImageInStorage(img as string);
+    }
     await Post.findByIdAndDelete(id);
+
     revalidatePath(PAGE_ROUTES.blog);
     revalidatePath(PAGE_ROUTES.admin);
   } catch (err) {
@@ -114,10 +139,14 @@ export const addUser = async (prevState: unknown, formData: FormData) => {
 };
 
 export const deleteUser = async (formData: FormData) => {
-  const { id } = Object.fromEntries(formData);
+  const { id, img } = Object.fromEntries(formData);
 
   try {
     connectToDb();
+
+    if (img) {
+      await deleteImageInStorage(img as string);
+    }
 
     await Post.deleteMany({ userId: id });
     await User.findByIdAndDelete(id);
