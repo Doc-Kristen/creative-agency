@@ -7,16 +7,43 @@ import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 import { StateAdminForm } from "@/types/utils.type";
 import { PAGE_ROUTES } from "./helpers/const";
-import { put } from "@vercel/blob";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "./firebase";
 
-export const uploadImage = async (formData: FormData) => {
-  const imageFile = formData.get("img") as File;
-  console.log("imageFile", imageFile);
-  if (imageFile && imageFile.size) {
-    const blob = await put(imageFile.name, imageFile, {
-      access: "public",
+const uploadImage = async (formData: FormData) => {
+  try {
+    const imageFile = formData.get("img") as File;
+    const storageRef = ref(storage, "images/" + imageFile.name);
+    const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+    return new Promise((resolve, reject) => {
+      // Listen for state changes, errors, and completion of the upload
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // You can add handling for upload states if needed
+        },
+        (error) => {
+          // Error handling
+          console.error("Error uploading image:", error);
+          reject(error);
+        },
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              resolve(downloadURL);
+            })
+            .catch((urlError) => {
+              console.error("Error getting download URL:", urlError);
+              reject(urlError);
+            });
+        }
+      );
     });
-    return blob.url;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    return null;
   }
 };
 
