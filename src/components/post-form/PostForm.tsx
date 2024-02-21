@@ -15,9 +15,20 @@ interface AdminPostFormProps {
 const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
   const formRef = React.useRef<HTMLFormElement>(null);
 
+  const [previewImage, setPreviewImage] = React.useState<string | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+    }
+  };
+
   const handlePost = async (state: StateAdminForm, formData: FormData) => {
     const addPostAction = await addPost(state, formData);
     if (!addPostAction.error) {
+      setPreviewImage(null);
       formRef.current?.reset();
     }
     return addPostAction;
@@ -29,16 +40,6 @@ const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
       error: null,
     }
   );
-
-  const [previewImage, setPreviewImage] = React.useState<string | null>(null);
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-    }
-  };
 
   return (
     <form ref={formRef} action={formAction} className={styles.container}>

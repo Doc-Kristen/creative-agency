@@ -113,7 +113,7 @@ export const deletePost = async (formData: FormData) => {
   }
 };
 
-export const addUser = async (prevState: unknown, formData: FormData) => {
+export const addUser = async (state: StateAdminForm, formData: FormData) => {
   try {
     const { username, email, password } = Object.fromEntries(formData);
     const imgURL = (await uploadImage(formData)) || null;
@@ -132,6 +132,7 @@ export const addUser = async (prevState: unknown, formData: FormData) => {
     await newUser.save();
     console.log("saved to db");
     revalidatePath(PAGE_ROUTES.admin);
+    return state;
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };

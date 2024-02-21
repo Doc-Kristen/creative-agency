@@ -5,8 +5,10 @@ import { useFormState } from "react-dom";
 import { addUser } from "@/lib/action";
 import Image from "next/image";
 import styles from "./admin-user-form.module.scss";
+import { StateAdminForm } from "@/types/utils.type";
 
 const AdminUserForm: React.FC = () => {
+  const userFormRef = React.useRef<HTMLFormElement>(null);
   const [previewImage, setPreviewImage] = React.useState<string | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,8 +19,21 @@ const AdminUserForm: React.FC = () => {
     }
   };
 
-  const [state, formAction] = useFormState(addUser, undefined);
+  const handleUser = async (state: StateAdminForm, formData: FormData) => {
+    const addPostAction = await addUser(state, formData);
+    if (!addPostAction?.error) {
+      setPreviewImage(null);
+      userFormRef.current?.reset();
+    }
+    return addPostAction;
+  };
 
+  const [state, formAction] = useFormState<StateAdminForm, FormData>(
+    handleUser,
+    {
+      error: null,
+    }
+  );
   return (
     <form action={formAction} className={styles.container}>
       <h1>Add new user</h1>
