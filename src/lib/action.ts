@@ -18,6 +18,11 @@ import { firebaseConfig, storage } from "./firebase";
 const uploadImage = async (formData: FormData) => {
   try {
     const imageFile = formData.get("img") as File;
+
+    if (!imageFile.size) {
+      return null;
+    }
+
     const storageRef = ref(storage, "images/" + imageFile.name);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
@@ -72,7 +77,7 @@ const deleteImageInStorage = async (imageUrl: string | undefined) => {
 export const addPost = async (state: StateAdminForm, formData: FormData) => {
   try {
     connectToDb();
-    const imgURL = (await uploadImage(formData)) || null;
+    const imgURL = await uploadImage(formData);
 
     const { description, slug, userId, title } = Object.fromEntries(formData);
     console.log(description, slug, userId, title);
@@ -81,9 +86,11 @@ export const addPost = async (state: StateAdminForm, formData: FormData) => {
       description,
       slug,
       userId,
-      img: imgURL,
       title,
     });
+    if (imgURL) {
+      newPost.img = imgURL as string;
+    }
 
     await newPost.save();
     revalidatePath(PAGE_ROUTES.blog);
@@ -95,18 +102,20 @@ export const addPost = async (state: StateAdminForm, formData: FormData) => {
   }
 };
 
-export const deletePost = async (formData: FormData) => {
+export const deletePost = async (state: StateAdminForm, formData: FormData) => {
   const { id, img } = Object.fromEntries(formData);
 
   try {
     connectToDb();
-    if (img) {
-      await deleteImageInStorage(img as string);
+    if (typeof img === "string") {
+      await deleteImageInStorage(img);
     }
+
     await Post.findByIdAndDelete(id);
 
     revalidatePath(PAGE_ROUTES.blog);
     revalidatePath(PAGE_ROUTES.admin);
+    return state;
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -116,7 +125,7 @@ export const deletePost = async (formData: FormData) => {
 export const addUser = async (state: StateAdminForm, formData: FormData) => {
   try {
     const { username, email, password } = Object.fromEntries(formData);
-    const imgURL = (await uploadImage(formData)) || null;
+    const imgURL = await uploadImage(formData);
 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password as string, salt);
@@ -126,8 +135,11 @@ export const addUser = async (state: StateAdminForm, formData: FormData) => {
       username,
       email,
       password: hashPassword,
-      img: imgURL,
     });
+
+    if (imgURL) {
+      newUser.img = imgURL as string;
+    }
 
     await newUser.save();
     console.log("saved to db");
@@ -139,20 +151,22 @@ export const addUser = async (state: StateAdminForm, formData: FormData) => {
   }
 };
 
-export const deleteUser = async (formData: FormData) => {
+export const deleteUser = async (state: StateAdminForm, formData: FormData) => {
   const { id, img } = Object.fromEntries(formData);
 
   try {
     connectToDb();
 
-    if (img) {
-      await deleteImageInStorage(img as string);
+    if (typeof img === "string") {
+      await deleteImageInStorage(img);
     }
 
     await Post.deleteMany({ userId: id });
     await User.findByIdAndDelete(id);
     console.log("deleted from db");
     revalidatePath(PAGE_ROUTES.admin);
+
+    return state;
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };

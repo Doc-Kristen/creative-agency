@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import Image from "next/image";
 import { addPost } from "@/lib/action";
 import { StateAdminForm } from "@/types/utils.type";
 import styles from "./post-form.module.scss";
-import ButtonForm from "./button-form/ButtonForm";
+import ButtonForm from "../button-form/ButtonForm";
+import useFormPending from "@/hooks/useFormPending";
 
 interface AdminPostFormProps {
   userId: string;
@@ -14,6 +15,8 @@ interface AdminPostFormProps {
 
 const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
   const formRef = React.useRef<HTMLFormElement>(null);
+
+  const { isPending, setIsPending } = useFormPending();
 
   const [previewImage, setPreviewImage] = React.useState<string | null>(null);
 
@@ -44,7 +47,7 @@ const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
   return (
     <form ref={formRef} action={formAction} className={styles.container}>
       <h1>Add New Post</h1>
-      <input type="hidden" name="userId" value={userId} />
+      <input type="hidden" name="userId" value={userId} disabled={isPending} />
       {previewImage && (
         <div className={styles.previewImage}>
           <Image
@@ -65,12 +68,23 @@ const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
           accept="image/*"
           onChange={handleImageChange}
           placeholder="Выберите изображение"
+          disabled={isPending}
         />
       </div>
-      <input type="text" name="title" placeholder="title" />
-      <input type="text" name="slug" placeholder="slug" />
-      <textarea name="description" placeholder="description" rows={10} />
-      <ButtonForm />
+      <input
+        disabled={isPending}
+        type="text"
+        name="title"
+        placeholder="title"
+      />
+      <input disabled={isPending} type="text" name="slug" placeholder="slug" />
+      <textarea
+        disabled={isPending}
+        name="description"
+        placeholder="description"
+        rows={10}
+      />
+      <ButtonForm setIsPending={setIsPending}>Add</ButtonForm>
       {state?.error}
     </form>
   );

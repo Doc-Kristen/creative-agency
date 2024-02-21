@@ -1,15 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { addUser } from "@/lib/action";
 import Image from "next/image";
-import styles from "./admin-user-form.module.scss";
+import ButtonForm from "../button-form/ButtonForm";
 import { StateAdminForm } from "@/types/utils.type";
+import styles from "./admin-user-form.module.scss";
+import useFormPending from "@/hooks/useFormPending";
 
 const AdminUserForm: React.FC = () => {
   const userFormRef = React.useRef<HTMLFormElement>(null);
+
   const [previewImage, setPreviewImage] = React.useState<string | null>(null);
+  const { isPending, setIsPending } = useFormPending();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,8 +38,9 @@ const AdminUserForm: React.FC = () => {
       error: null,
     }
   );
+
   return (
-    <form action={formAction} className={styles.container}>
+    <form ref={userFormRef} action={formAction} className={styles.container}>
       <h1>Add new user</h1>
       {previewImage && (
         <div className={styles.avatarImageWrapper}>
@@ -56,17 +61,33 @@ const AdminUserForm: React.FC = () => {
           accept="image/*"
           onChange={handleImageChange}
           placeholder="Выберите изображение"
+          disabled={isPending}
         />
       </div>
-      <input type="text" name="username" placeholder="username" />
-      <input type="text" name="email" placeholder="email" />
-      <input type="password" name="password" placeholder="password" />
-      <select name="isAdmin">
+      <input
+        type="text"
+        name="username"
+        placeholder="username"
+        disabled={isPending}
+      />
+      <input
+        type="text"
+        name="email"
+        placeholder="email"
+        disabled={isPending}
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="password"
+        disabled={isPending}
+      />
+      <select name="isAdmin" disabled={isPending}>
         <option value="false">Is Admin?</option>
         <option value="false">No</option>
         <option value="true">Yes</option>
       </select>
-      <button className={styles.button}>Add</button>
+      <ButtonForm setIsPending={setIsPending}>Delete</ButtonForm>
       {state?.error}
     </form>
   );

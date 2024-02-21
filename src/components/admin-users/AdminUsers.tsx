@@ -1,6 +1,5 @@
-import Image from "next/image";
 import { getUsers } from "@/lib/data";
-import { deleteUser } from "@/lib/action";
+import UserRow from "./user-row/UserRow";
 import styles from "./admin-users.module.scss";
 
 const AdminUsers: React.FC = async () => {
@@ -9,23 +8,8 @@ const AdminUsers: React.FC = async () => {
   return (
     <div className={styles.container}>
       <h1>Users</h1>
-      {users.map((user) => (
-        <div className={styles.user} key={user.id}>
-          <div className={styles.detail}>
-            <Image
-              src={user.img || "/img/no-avatar.png"}
-              alt=""
-              width={50}
-              height={50}
-            />
-            <span>{user.username}</span>
-          </div>
-          <form action={deleteUser}>
-            <input type="hidden" name="id" value={user.id} />
-            <input type="hidden" name="img" value={user.img} />
-            <button className={styles.userButton}>Delete</button>
-          </form>
-        </div>
+      {users.map(({ id, img, username }) => (
+        <UserRow user={{ id, img, username }} key={id} />
       ))}
     </div>
   );

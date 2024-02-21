@@ -1,11 +1,11 @@
-import PostForm from "@/components/post-form/PostForm";
-import styles from "./admin.module.scss";
 import { Suspense } from "react";
 import AdminPosts from "@/components/admin-posts/AdminPosts";
 import AdminUsers from "@/components/admin-users/AdminUsers";
+import PostForm from "@/components/post-form/PostForm";
 import AdminUserForm from "@/components/admin-user-form/AdminUserForm";
 import { auth } from "@/lib/auth";
 import { getPosts } from "@/lib/data";
+import styles from "./admin.module.scss";
 
 export const metadata = {
   title: "Admin",

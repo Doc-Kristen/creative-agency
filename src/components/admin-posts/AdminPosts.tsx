@@ -1,33 +1,19 @@
-import Image from "next/image";
-import { deletePost } from "@/lib/action";
+import React from "react";
 import styles from "./admin-posts.module.scss";
-import { IPost } from "@/types/IPost.type";
+import { getPosts } from "@/lib/data";
+import PostRow from "./post-row/PostRow";
+import { IPostBase } from "@/types/IPost.type";
 
 interface AdminPostsProps {
-  posts: IPost[];
+  posts: IPostBase[];
 }
 
-const AdminPosts: React.FC<AdminPostsProps> = ({ posts }) => {
+const AdminPosts: React.FC<AdminPostsProps> = async ({ posts }) => {
   return (
     <div className={styles.container}>
       <h1>Posts</h1>
-      {posts.map((post) => (
-        <div className={styles.post} key={post.id}>
-          <div className={styles.detail}>
-            <Image
-              src={post.img || "/img/no-avatar.png"}
-              alt="Post image"
-              width={50}
-              height={50}
-            />
-            <span className={styles.postTitle}>{post.title}</span>
-          </div>
-          <form action={deletePost}>
-            <input type="hidden" name="id" value={post.id} />
-            <input type="hidden" name="img" value={post.img} />
-            <button className={styles.postButton}>Delete</button>
-          </form>
-        </div>
+      {posts.map(({ id, img, title }) => (
+        <PostRow post={{ id, img, title }} key={id} />
       ))}
     </div>
   );

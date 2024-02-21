@@ -1,9 +1,12 @@
-export interface IPost {
+export interface IPostBase {
+  id: string;
   title: string;
-  description: string;
   img?: string;
+}
+
+export interface IPost extends IPostBase {
+  description: string;
   userId: string;
   slug: string;
-  id: string;
   createdAt: string;
 }
