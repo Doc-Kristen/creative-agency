@@ -62,15 +62,19 @@ export const deletePost = async (formData: FormData) => {
 };
 
 export const addUser = async (prevState: unknown, formData: FormData) => {
-  const { username, email, password, img } = Object.fromEntries(formData);
-
   try {
+    const { username, email, password } = Object.fromEntries(formData);
+    const imgURL = (await uploadImage(formData)) || null;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password as string, salt);
+
     connectToDb();
     const newUser = new User({
       username,
       email,
-      password,
-      img,
+      password: hashPassword,
+      img: imgURL,
     });
 
     await newUser.save();

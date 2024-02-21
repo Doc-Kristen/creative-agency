@@ -2,38 +2,63 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
 
-.container input,
-.container textarea,
-.container select {
-  padding: 20px;
-  background-color: $color-bgSoft;
-  border: none;
-  border-radius: 5px;
-  color: $color-text;
-}
-
-.container button {
-  padding: 20px;
-  background-color: $color-btn;
-  border: none;
-  border-radius: 5px;
-  color: $color-text;
-  font-weight: bold;
-  transition: opacity $trans-default, background-color $trans-default;
-  cursor: pointer;
-
-  @include hover-focus {
-    opacity: 0.8;
+  .avatarImageWrapper {
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
   }
 
-  &:active {
-    background-color: $color-jacksons-purple;
+  input,
+  textarea,
+  select {
+    padding: 20px;
+    background-color: $color-bgSoft;
+    border: none;
+    border-radius: 5px;
+    color: $color-text;
   }
 
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  .uploadImage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    @include vp-1023 {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    input {
+      cursor: pointer;
+    }
+  }
+
+  .button {
+    padding: 20px;
+    background-color: $color-btn;
+    border: none;
+    border-radius: 5px;
+    color: $color-text;
+    font-weight: bold;
+    transition: opacity $trans-default, background-color $trans-default;
+    cursor: pointer;
+
+    @include hover-focus {
+      opacity: 0.8;
+    }
+
+    &:active {
+      background-color: $color-jacksons-purple;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 }

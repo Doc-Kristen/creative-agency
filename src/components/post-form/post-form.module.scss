@@ -27,6 +27,20 @@
     }
   }
 
+  input,
+  textarea,
+  select {
+    padding: 20px;
+    background-color: $color-bgSoft;
+    border: none;
+    border-radius: 5px;
+    color: $color-text;
+
+    @include vp-1023 {
+      width: 100%;
+    }
+  }
+
   .uploadImage {
     display: flex;
     justify-content: space-between;
@@ -40,20 +54,6 @@
 
     input {
       cursor: pointer;
-    }
-  }
-
-  input,
-  textarea,
-  select {
-    padding: 20px;
-    background-color: $color-bgSoft;
-    border: none;
-    border-radius: 5px;
-    color: $color-text;
-
-    @include vp-1023 {
-      width: 100%;
     }
   }
 }
