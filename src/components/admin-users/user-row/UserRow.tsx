@@ -9,6 +9,8 @@ import { StateAdminForm } from "@/types/utils.type";
 import { IUserBase } from "@/types/IUser.type";
 import styles from "./user-row.module.scss";
 import useFormPending from "@/hooks/useFormPending";
+import Link from "next/link";
+import { PAGE_ROUTES } from "@/lib/helpers/const";
 
 interface UserRowProps {
   user: IUserBase;
@@ -37,6 +39,12 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
       <form action={formAction}>
         <input type="hidden" name="id" value={user.id} />
         <input type="hidden" name="img" value={user.img} />
+        <Link
+          href={`${PAGE_ROUTES.profile}/${user.id}`}
+          className={styles.link}
+        >
+          Go to user
+        </Link>
         <ButtonForm className={"deleteButton"} setIsPending={setIsPending}>
           Delete
         </ButtonForm>
