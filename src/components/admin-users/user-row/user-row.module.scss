@@ -16,11 +16,20 @@
       border-radius: 50%;
       object-fit: cover;
     }
+
+    .title {
+      width: 80%;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
   form {
     display: flex;
     flex-wrap: wrap;
+    flex-shrink: 0;
     gap: 15px;
   }
 

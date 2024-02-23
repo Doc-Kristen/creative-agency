@@ -33,7 +33,7 @@ const PostRow: React.FC<PostRowProps> = ({ post }) => {
           width={50}
           height={50}
         />
-        <span className={styles.postTitle}>{post.title}</span>
+        <span className={styles.title}>{post.title}</span>
       </div>
       <form action={formAction}>
         <input type="hidden" name="id" value={post.id} />

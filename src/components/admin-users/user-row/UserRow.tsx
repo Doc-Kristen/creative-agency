@@ -34,7 +34,7 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
           width={50}
           height={50}
         />
-        <span>{user.username}</span>
+        <span className={styles.title}>{user.username}</span>
       </div>
       <form action={formAction}>
         <input type="hidden" name="id" value={user.id} />
