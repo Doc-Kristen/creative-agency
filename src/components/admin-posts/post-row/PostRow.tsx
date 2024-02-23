@@ -9,6 +9,7 @@ import { StateAdminForm } from "@/types/utils.type";
 import { IPostBase } from "@/types/IPost.type";
 import useFormPending from "@/hooks/useFormPending";
 import styles from "./post-row.module.scss";
+import Link from "next/link";
 
 interface PostRowProps {
   post: IPostBase;
@@ -37,6 +38,9 @@ const PostRow: React.FC<PostRowProps> = ({ post }) => {
       <form action={formAction}>
         <input type="hidden" name="id" value={post.id} />
         <input type="hidden" name="img" value={post.img} />
+        <Link href={post.id} className={styles.link}>
+          Go to post
+        </Link>
         <ButtonForm className={"deleteButton"} setIsPending={setIsPending}>
           Delete
         </ButtonForm>

@@ -17,4 +17,29 @@
       object-fit: cover;
     }
   }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .link {
+    padding: 5px 10px;
+    background-color: $color-btn;
+    color: $color-text;
+    border-radius: 5px;
+    border: none;
+    transition: opacity $trans-default, background-color $trans-default;
+    user-select: none;
+    cursor: pointer;
+
+    @include hover-focus {
+      opacity: 0.8;
+    }
+
+    &:active {
+      background-color: $color-jacksons-purple;
+    }
+  }
 }
