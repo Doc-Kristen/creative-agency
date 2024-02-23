@@ -12,8 +12,8 @@ const AdminPosts: React.FC<AdminPostsProps> = async ({ posts }) => {
   return (
     <div className={styles.container}>
       <h1>Posts</h1>
-      {posts.map(({ id, img, title }) => (
-        <PostRow post={{ id, img, title }} key={id} />
+      {posts.map(({ id, img, title, slug }) => (
+        <PostRow post={{ id, img, title, slug }} key={id} />
       ))}
     </div>
   );

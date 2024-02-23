@@ -12,6 +12,7 @@ import useFormPending from "@/hooks/useFormPending";
 interface AdminPostFormProps {
   userId: string;
 }
+console.log();
 
 const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -77,7 +78,6 @@ const AdminPostForm: React.FC<AdminPostFormProps> = ({ userId }) => {
         name="title"
         placeholder="title"
       />
-      <input disabled={isPending} type="text" name="slug" placeholder="slug" />
       <textarea
         disabled={isPending}
         name="description"

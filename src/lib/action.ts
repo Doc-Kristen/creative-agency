@@ -14,6 +14,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { firebaseConfig, storage } from "./firebase";
+import slugify from "slugify";
 
 const uploadImage = async (formData: FormData) => {
   try {
@@ -77,19 +78,24 @@ const deleteImageInStorage = async (imageUrl: string | undefined) => {
 export const addPost = async (state: StateAdminForm, formData: FormData) => {
   try {
     connectToDb();
+    const { description, userId, title } = Object.fromEntries(formData);
     const imgURL = await uploadImage(formData);
 
-    const { description, slug, userId, title } = Object.fromEntries(formData);
-    console.log(description, slug, userId, title);
+    const formattedSlug = slugify(String(title), { lower: true });
 
+    const isDuplicateSlug = await Post.findOne({ slug: formattedSlug });
+
+    if (isDuplicateSlug) {
+      return { error: "The title must be unique" };
+    }
     const newPost = new Post({
-      description,
-      slug,
-      userId,
       title,
+      description,
+      slug: formattedSlug,
+      userId,
     });
     if (imgURL) {
-      newPost.img = imgURL as string;
+      newPost.img = String(imgURL);
     }
 
     await newPost.save();
