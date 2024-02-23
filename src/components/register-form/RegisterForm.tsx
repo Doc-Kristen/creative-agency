@@ -3,8 +3,8 @@
 import { register } from "@/lib/action";
 import styles from "./register-form.module.scss";
 import { useFormState } from "react-dom";
-// import { useRouter } from "next/navigation";
-// import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Link from "next/link";
 import { PAGE_ROUTES } from "@/lib/helpers/const";
 import useFormPending from "@/hooks/useFormPending";
@@ -16,10 +16,11 @@ const RegisterForm: React.FC = () => {
     error: null,
   });
   const { isPending, setIsPending } = useFormPending();
-  // const router = useRouter();
-  // useEffect(() => {
-  //   state?.success && router.push(PAGE_ROUTES.login);
-  // }, [router, state?.success]);
+
+  const router = useRouter();
+  useEffect(() => {
+    state?.success && router.push(PAGE_ROUTES.login);
+  }, [router, state?.success]);
 
   return (
     <div className={styles.container}>
@@ -46,6 +47,7 @@ const RegisterForm: React.FC = () => {
           type="password"
           name="passwordRepeat"
           placeholder="password again"
+          disabled={isPending}
         />
         <ButtonForm setIsPending={setIsPending}>Register</ButtonForm>
         {state?.error}

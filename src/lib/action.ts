@@ -213,7 +213,7 @@ export const register = async (state: StateAdminForm, formData: FormData) => {
     });
     await newUser.save();
     console.log("User saved");
-    // return { success: true };
+    state.success = true;
     return state;
   } catch (error) {
     return { error: "Something went wrong" };

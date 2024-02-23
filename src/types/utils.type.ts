@@ -5,5 +5,6 @@ export interface ICredentials {
 }
 
 export type StateAdminForm = {
-  error: string | null;
+  error?: string | null;
+  success?: boolean;
 };
