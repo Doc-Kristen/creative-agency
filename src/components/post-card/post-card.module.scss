@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 20px;
   margin-bottom: 20px;
+  height: 100%;
 
   .imgContainer {
     position: relative;
@@ -28,6 +29,7 @@
   .info {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     padding: 0 20px;
 
     .date {
@@ -38,6 +40,10 @@
       width: 90%;
       font-size: 24px;
       margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .description {
@@ -54,6 +60,7 @@
       text-decoration: underline;
       opacity: 1;
       transition: opacity $trans-default;
+      margin-top: auto;
       margin-left: auto;
 
       @include hover-focus {
