@@ -188,19 +188,7 @@ export const handleLogout = async () => {
   await signOut();
 };
 
-export const register = async (
-  _previousState:
-    | {
-        error: string;
-        success?: undefined;
-      }
-    | {
-        success: boolean;
-        error?: undefined;
-      }
-    | undefined,
-  formData: FormData
-) => {
+export const register = async (state: StateAdminForm, formData: FormData) => {
   const { username, password, email, img, passwordRepeat } =
     Object.fromEntries(formData);
 
@@ -225,7 +213,8 @@ export const register = async (
     });
     await newUser.save();
     console.log("User saved");
-    return { success: true };
+    // return { success: true };
+    return state;
   } catch (error) {
     return { error: "Something went wrong" };
   }

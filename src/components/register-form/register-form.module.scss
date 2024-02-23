@@ -11,6 +11,11 @@
       color: $color-text;
       border: none;
       border-radius: 5px;
+
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     }
 
     button {
