@@ -11,16 +11,22 @@ const PostCard: React.FC<{ post: IPost }> = ({ post }) => {
       <div className={styles.top}>
         {post.img && (
           <div className={styles.imgContainer}>
-            <Image src={post.img} alt="" fill className={styles.img} />
+            <Image
+              src={post.img}
+              alt="Post image"
+              width={450}
+              height={400}
+              className={styles.img}
+            />
           </div>
         )}
+      </div>
+      <div className={styles.info}>
+        <h1 className={styles.title}>{post.title}</h1>
         <time dateTime={post.createdAt} className={styles.date}>
           {date}
         </time>
-      </div>
-      <div className={styles.bottom}>
-        <h1 className={styles.title}>{post.title}</h1>
-        <p className={styles.desc}>{post.description}</p>
+        <p className={styles.description}>{post.description}</p>
         <Link className={styles.link} href={`/blog/${post.slug}`}>
           READ MORE
         </Link>

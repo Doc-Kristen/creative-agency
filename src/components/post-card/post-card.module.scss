@@ -4,50 +4,65 @@
   gap: 20px;
   margin-bottom: 20px;
 
-  .top {
-    display: flex;
-  }
-
   .imgContainer {
-    width: 90%;
-    height: 400px;
     position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    &::before {
+      content: "";
+      display: block;
+      padding-bottom: calc(400 / 450 * 100%);
+    }
 
     img {
-      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
-  .date {
-    font-size: 12px;
-    transform: rotate(270deg);
-    margin: auto;
-  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
 
-  .title {
-    width: 90%;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-
-  .desc {
-    width: 90%;
-    margin-bottom: 20px;
-    font-weight: 300;
-    color: $color-gray;
-  }
-
-  .link {
-    text-decoration: underline;
-    opacity: 1;
-    transition: opacity $trans-default;
-
-    @include hover-focus {
-      opacity: 0.8;
+    .date {
+      font-size: 10px;
     }
 
-    &:active {
-      opacity: 0.5;
+    .title {
+      width: 90%;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      margin-bottom: 20px;
+      font-weight: 300;
+      color: $color-gray;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .link {
+      text-decoration: underline;
+      opacity: 1;
+      transition: opacity $trans-default;
+      margin-left: auto;
+
+      @include hover-focus {
+        opacity: 0.8;
+      }
+
+      &:active {
+        opacity: 0.5;
+      }
     }
   }
 }
