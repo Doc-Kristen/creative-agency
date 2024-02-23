@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
         />
         <ButtonForm setIsPending={setIsPending}>Login</ButtonForm>
         {state?.error}
-        <Link href={PAGE_ROUTES.register}>
+        <Link href={PAGE_ROUTES.register} className={styles.link}>
           {"Don't have an account?"} <b>Register</b>
         </Link>
       </form>

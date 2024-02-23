@@ -11,26 +11,15 @@
       color: $color-text;
       border: none;
       border-radius: 5px;
-    }
 
-    button {
-      padding: 20px;
-      cursor: pointer;
-      background-color: $color-btn;
-      color: $color-text;
-      font-weight: bold;
-      border: none;
-      border-radius: 5px;
-      opacity: 1;
-      transition: opacity $trans-default;
-
-      @include hover-focus {
-        opacity: 0.8;
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
       }
     }
   }
 
-  a {
+  .link {
     opacity: 1;
     transition: opacity $trans-default;
 
