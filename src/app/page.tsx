@@ -1,6 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./home.module.scss";
+import redditIcon from "../../public/img/reddit.svg";
+import discordIcon from "../../public/img/discord.svg";
+import twitchIcon from "../../public/img/twitch.svg";
+import { PAGE_ROUTES } from "@/lib/helpers/const";
+
+const brands = [
+  { src: redditIcon, name: "Reddit" },
+  { src: twitchIcon, name: "Twitch" },
+  { src: discordIcon, name: "Discord" },
+];
 
 const Home: React.FC = () => {
   return (
@@ -16,18 +26,24 @@ const Home: React.FC = () => {
           <Link href={"#"} className={`${styles.button} ${styles.button_blue}`}>
             Learn more
           </Link>
-          <Link href={"#"} className={styles.button}>
+          <Link href={`${PAGE_ROUTES.contact}`} className={styles.button}>
             Contact
           </Link>
         </div>
-        <div className={styles.brands}>
-          <Image
-            src={"/img/brands.png"}
-            alt=""
-            fill
-            className={styles.brandImg}
-          />
-        </div>
+        <ul className={styles.brandsList}>
+          {brands.map((partner) => {
+            return (
+              <li key={partner.name} className={styles.brandsItem}>
+                <Image
+                  src={partner.src}
+                  alt={partner.name}
+                  fill
+                  className={styles.brandImg}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
       <div className={styles.imgContainer}>
         <Image

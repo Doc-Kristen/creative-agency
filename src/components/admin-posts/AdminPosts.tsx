@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./admin-posts.module.scss";
-import { getPosts } from "@/lib/data";
 import PostRow from "./post-row/PostRow";
 import { IPostBase } from "@/types/IPost.type";
 
