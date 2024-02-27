@@ -17,7 +17,7 @@ const Logo = () => {
       fill="currentColor"
     />
   ) : (
-    <Link href={PAGE_ROUTES.main} className={styles.logo}>
+    <Link href={PAGE_ROUTES.main} className={styles.logo} aria-label="Go to main page">
       <LogoIcon width={50} height={50} fill="currentColor" />
     </Link>
   );
