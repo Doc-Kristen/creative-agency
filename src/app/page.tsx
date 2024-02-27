@@ -1,11 +1,16 @@
-"use server";
+"use client";
+
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "./home.module.scss";
 import redditIcon from "../../public/img/reddit.svg?url";
 import discordIcon from "../../public/img/discord.svg?url";
 import twitchIcon from "../../public/img/twitch.svg?url";
 import { PAGE_ROUTES } from "@/lib/helpers/const";
+import introAnimation from "../../public/lottie/intro-animation.json";
+import styles from "./home.module.scss";
+
+const DynamicLottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const brands = [
   { src: redditIcon, name: "Reddit" },
@@ -46,15 +51,12 @@ const Home: React.FC = () => {
           })}
         </ul>
       </div>
-      <div className={styles.imgContainer}>
-        <Image
-          src={"/img/hero.gif"}
-          alt={" "}
-          width={500}
-          height={500}
-          className={styles.heroImg}
+        <DynamicLottie
+          animationData={introAnimation}
+          className={styles.imgContainer}
+          loop={true}
+          style={{ maxWidth: 500, maxHeight: 500 }}
         />
-      </div>
     </section>
   );
 };
