@@ -1,9 +1,10 @@
+"use server";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./home.module.scss";
-import redditIcon from "../../public/img/reddit.svg";
-import discordIcon from "../../public/img/discord.svg";
-import twitchIcon from "../../public/img/twitch.svg";
+import redditIcon from "../../public/img/reddit.svg?url";
+import discordIcon from "../../public/img/discord.svg?url";
+import twitchIcon from "../../public/img/twitch.svg?url";
 import { PAGE_ROUTES } from "@/lib/helpers/const";
 
 const brands = [

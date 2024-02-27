@@ -1,0 +1,9 @@
+.logo {
+  color: $color-text;
+  opacity: 1;
+  transition: opacity $trans-default;
+
+  @include hover-focus {
+    opacity: 0.8;
+  }
+}
