@@ -8,6 +8,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    gap: 20px;
   }
 
   .textContainer {
@@ -16,6 +17,10 @@
     flex-direction: column;
     gap: 50px;
 
+    @include vp-767 {
+      gap: 10px;
+    }
+
     .title {
       font-size: 96px;
       line-height: normal;
@@ -23,10 +28,26 @@
       @include vp-1279 {
         font-size: 64px;
       }
+
+      @include vp-1023 {
+        font-size: 44px;
+      }
+
+      @include vp-767 {
+        font-size: 34px;
+      }
+
+      @include vp-374 {
+        font-size: 24px;
+      }
     }
 
     .description {
       font-size: 20px;
+
+      @include vp-374 {
+        font-size: 15px;
+      }
     }
 
     .buttons {
@@ -98,6 +119,18 @@
 
     @include vp-1023 {
       width: 100%;
+    }
+  }
+
+  .imageContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 70%;
+    max-height: 700px;
+
+    @include vp-1023 {
+      justify-content: center;
+      max-height: 300px;
     }
   }
 }
