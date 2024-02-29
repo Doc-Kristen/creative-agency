@@ -1,6 +1,7 @@
-import Image from "next/image";
 import styles from "./about-hero.module.scss";
 import Statistics from "./statistics/Statistics";
+import AnimatedLottie from "../animated-lottie/AnimatedLottie";
+import animationData from "../../../public/lottie/about-us-animation.json";
 
 const statistics = [
   { title: "130 K+", description: "Clients" },
@@ -24,15 +25,8 @@ const AboutHero: React.FC = () => {
         </p>
         <Statistics statistics={statistics} />
       </div>
-      <div className={styles.imgContainer}>
-        <Image
-          src="/img/about.png"
-          className={styles.img}
-          width={500}
-          height={500}
-          alt="About image"
-          priority
-        />
+      <div className={styles.imageContainer}>
+        <AnimatedLottie animationData={animationData} />
       </div>
     </section>
   );

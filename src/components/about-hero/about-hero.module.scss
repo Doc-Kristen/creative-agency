@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  justify-content: space-between;
   gap: 100px;
 
   @include vp-1023 {
@@ -19,6 +20,10 @@
       gap: 30px;
     }
 
+    @include vp-767 {
+      gap: 10px;
+    }
+
     .subtitle {
       color: $color-btn
     }
@@ -26,38 +31,39 @@
     .title {
       font-size: 54px;
       line-height: normal;
+
+      @include vp-1279 {
+        font-size: 44px;
+      }
+
+      @include vp-1023 {
+        font-size: 34px;
+      }
+
+      @include vp-767 {
+        font-size: 24px;
+      }
     }
 
     .description {
       font-size: 20px;
-      font-weight: 300;
+
+      @include vp-767 {
+        font-size: 15px;
+      }
     }
   }
 
-  .imgContainer {
+  .imageContainer {
+    display: flex;
     flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    width: 400px;
+    justify-content: flex-end;
+    width: 40%;
+    max-height: 600px;
 
     @include vp-1023 {
-      width: 300px;
+      justify-content: center;
+      max-height: 300px;
     }
-
-    &::before {
-      content: "";
-      display: block;
-      padding-bottom: calc(400 / 400 * 100%);
-    }
-
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
   }
 }
